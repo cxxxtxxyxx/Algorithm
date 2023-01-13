@@ -1,47 +1,54 @@
 import sys
-from collections import deque;
+from collections import deque
 
-n = int(input())
-Deque = deque()
+PUSH_FRONT = "push_front"
+PUSH_BACK = "push_back"
+POP_FRONT = "pop_front"
+POP_BACK = "pop_back"
+SIZE = "size"
+EMPTY = "empty"
+FRONT = "front"
+BACK = "back"
+input = sys.stdin.readline
+n = int(input().strip())
+q = deque()
 
-for _ in range(n):
-  testCase = sys.stdin.readline().strip().split(' ')
-  command = testCase[0]
-  
-  if command == 'push_front':
-    n = int(testCase[1])
-    Deque.appendleft(n)
-  elif command == 'push_back':
-    n = int(testCase[1])
-    Deque.append(n)
-  elif command == 'pop_front':
-    if len(Deque) != 0:
-      print(Deque.popleft())
+for __ in range(n):
+    op = input().strip().split()
+
+    if op[0] == PUSH_FRONT:
+        q.appendleft(op[1])
+
+    elif op[0] == PUSH_BACK:
+        q.append(op[1])
+
+    elif op[0] == POP_FRONT:
+        if len(q) == 0:
+            print(-1)
+            continue
+        print(q.popleft())
+    elif op[0] == POP_BACK:
+        if len(q) == 0:
+            print(-1)
+            continue
+        print(q.pop())
+    elif op[0] == SIZE:
+        print(len(q))
+        
+    elif op[0] == EMPTY:
+        if len(q) == 0:
+            print(1)
+            continue
+        print(0)
+        
+        
+    elif op[0] == FRONT:
+        if len(q) == 0:
+            print(-1)
+            continue
+        print(q[0])
     else:
-      print(-1)
-  elif command == 'pop_back':
-    if len(Deque) != 0:
-      print(Deque.pop())
-    else:
-      print(-1)
-
-  elif command == 'size':
-    print(len(Deque))
-
-  elif command == 'empty':
-    if len(Deque) == 0:
-      print(1)
-    else:
-      print(0)
-  elif command == 'front':
-    if len(Deque) != 0:
-      print(Deque[0])
-    else:
-      print(-1)
-
-  else:
-    if len(Deque) != 0:
-      print(Deque[len(Deque) - 1])
-    else:
-      print(-1)
-
+        if len(q) == 0:
+            print(-1)
+            continue
+        print(q[-1])
