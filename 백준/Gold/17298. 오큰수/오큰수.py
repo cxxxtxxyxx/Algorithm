@@ -1,18 +1,18 @@
 import sys
-from collections import deque
 
-n = int(input())
-testCase = list(map(int, sys.stdin.readline().strip().split(' ')))
+n = int(input().strip())
 
-result = [-1] * n
-stack = deque()
+a = list(map(int, input().strip().split()))
 
-for i in range(n):
-  while stack and (stack[-1][0] < testCase[i]):
-    num, idx = stack.pop()
-    result[idx] = testCase[i]
-  stack.append([testCase[i], i])
+length = len(a)
+stack = []
+result = [-1] * length
+current_num = 0
+for idx in range(0, length):  
+    while stack and stack[-1][1] < a[idx]:
+        got_item = stack.pop()
+        result[got_item[0]] = a[idx]
 
-for item in result:
-  print(item, end=" ")
-
+    stack.append((idx, a[idx]))
+    
+print(*result)
