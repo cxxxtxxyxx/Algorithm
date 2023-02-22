@@ -24,7 +24,7 @@ def solution(queue1, queue2):
     if q1_sum == q2_sum:
         return 0
     while True:
-        if cnt >= size * 5 + 1:
+        if cnt >= size * 3:
             return -1
         if q1_sum > q2_sum:
             num = q1.popleft()
