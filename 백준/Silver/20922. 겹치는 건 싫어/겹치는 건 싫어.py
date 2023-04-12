@@ -9,11 +9,6 @@ N, K = map(int, input().split())
 s = list(map(int, input().split()))
 cnt_dict = dict()
 
-# for i in range(len(s)):
-#     for j in range(i + 1):
-#         if all(list(map(lambda x: x <= K, list(dict(Counter(s[j:len(s)-i+j])).values())))):
-#             print(len(s)-i+j)
-#             exit()
 
 left = 0
 right = 0
