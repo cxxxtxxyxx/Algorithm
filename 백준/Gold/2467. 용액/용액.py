@@ -6,8 +6,6 @@ N = int(input())
 
 liquid = list(map(int, input().split()))
 
-liquid.sort()
-
 
 if liquid[-1] < 0:
     print(liquid[-2], liquid[-1])
