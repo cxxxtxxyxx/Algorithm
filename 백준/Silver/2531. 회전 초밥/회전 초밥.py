@@ -1,43 +1,39 @@
 import sys
-from collections import deque
+from collections import defaultdict
 
 input = sys.stdin.readline
 
-
-# N 접시 수, 초밥의 가짓수 d, 연속해서 먹는 접시의 수 k, 쿠폰 번호 c
 N, d, k, c = map(int, input().split())
 
-lane = []
+sushi = [int(input()) for __ in range(N)]
 
-for __ in range(N):
-    lane.append(int(input()))
-
-# lane.rotate(-1) 
-
-
-_max = 0
 start = 0
-end = 0
+end = k - 1
+_max = 0
+eat = defaultdict(int)
+
+eat[c] += 1
+
+for i in range(k):
+    eat[sushi[i]] += 1
 
 
-while start != len(lane):
-    sushi = set()
-    end = start + k
-    flag = True
 
-    for i in range(start, end):
-        sushi.add(lane[i % len(lane)])
-        if lane[i % len(lane)] == c:
-            flag = False
+while start < N:
+    _max = max(_max, len(eat))
 
-    if flag:
-        _max = max(_max, len(sushi) + 1)
-    else:
-        _max = max(_max, len(sushi))
+
+    eat[sushi[start]] -= 1
+
+    if eat[sushi[start]] == 0:
+        del eat[sushi[start]]
 
 
     start += 1
+    end += 1
 
+    eat[sushi[end % N]] += 1
+
+    
 
 print(_max)
-        
