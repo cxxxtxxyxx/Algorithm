@@ -12,8 +12,6 @@ def solution(n):
     count = 0
     while end <= n:
         _sum += end
-        
-        
             
         if _sum < n:
             end += 1
