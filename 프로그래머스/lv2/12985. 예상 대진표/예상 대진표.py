@@ -1,12 +1,14 @@
-class Solution
-{
-    public int solution(int n, int a, int b)
-    {
-        int answer = 0;
+def solution(n,a,b):
+    
+    answer = 0
 
-        // [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-        System.out.println("Hello Java");
+    # step 1 홀수 // 2 + 1, 짝수 // 2 => 다음 라운드 번호
+    
+    while a != b:
+        answer += 1
+        
+        
+        a = (a + 1) // 2
+        b = (b + 1) // 2
 
-        return answer;
-    }
-}
+    return answer
