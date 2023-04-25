@@ -8,17 +8,20 @@
 점프 이동 최소화
 """
 
-def solution(n):
+# def solution(n):
     
-    if n == 1:
-        return 1
+#     if n == 1:
+#         return 1
     
-    count = 0
-    while n != 1:
-        if n % 2 == 0:
-            n //= 2
-            continue
-        n -= 1
-        count += 1
+#     count = 0
+#     while n != 1:
+#         if n % 2 == 0:
+#             n //= 2
+#             continue
+#         n -= 1
+#         count += 1
         
-    return count + 1
+#     return count + 1
+
+def solution(n):
+    return bin(n)[2:].count('1')
