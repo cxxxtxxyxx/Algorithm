@@ -24,4 +24,5 @@
 #     return count + 1
 
 def solution(n):
+    x = 2
     return bin(n)[2:].count('1')
