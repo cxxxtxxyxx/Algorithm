@@ -20,15 +20,11 @@ def solution(k, tangerine):
     while start <= end and end < len(v):
         if _sum >= k:
             count = min(count, end - start + 1)
-            _sum -= v[start]
-            start += 1
-            continue
+            return count
             
         if end + 1 < len(v):
             end += 1
             _sum += v[end]
             continue
-        else:
-            break
-
-    return count
+            
+        break
