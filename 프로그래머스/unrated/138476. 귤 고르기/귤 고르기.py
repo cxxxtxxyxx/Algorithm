@@ -10,9 +10,10 @@ def solution(k, tangerine):
         count_dict[el] += 1
     
     v = list(count_dict.values())
-    v.sort()
+    v.sort(reverse=True)
     start = 0
     end = 0
+
     _sum = v[start]
     count = sys.maxsize
     
