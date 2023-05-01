@@ -15,8 +15,7 @@ s를 이차원 배열로 만들면 됨
 def solution(s):
     answer = []
     res = list(map(lambda x: x.split(","), s[2:-2].split("},{")))
-    res.sort(key=lambda x: len(x))
-    
+    res.sort(key=len)    
     for case in res:
         for ch in case:
             if ch not in answer:
