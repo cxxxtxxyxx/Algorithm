@@ -33,7 +33,6 @@ def solution(want, number, discount):
     for i in range(10):
         discount_cnt[discount[i]] += 1
         
-  
     start = 0
     end = 9
     while end < len(discount):
