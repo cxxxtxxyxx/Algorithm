@@ -31,31 +31,6 @@ def solution(msg):
         word[msg[i:end+1]] = count
         count += 1
         i = end
-#         end = i + 1
-#         prev = ""
-#         idx = i
-#         while end < len(msg):
-#             find_idx = word[msg[i:end]]
-#             if find_idx != 0:
-#                 end += 1
-#                 prev = msg[i:end]
-#                 idx = find_idx
-#                 continue
-            
-            
-#             answer.append(idx)
-#             word[msg[i:end]] = count
-#             count += 1
-#             break
-        
-        
-#         i += 1
-        
-        # if end == len(msg):
-        #     answer.append(idx)
-        #     word[msg[i:end]] = count
-        #     count += 1
-            
     
     # Step 3: 다음 문자 포함해서 배열에 추가
     # Step 4: 반복
