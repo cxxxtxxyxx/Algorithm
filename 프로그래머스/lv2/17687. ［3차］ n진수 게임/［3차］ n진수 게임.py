@@ -14,12 +14,7 @@ def solution(n, t, m, p):
         convertstr += convert(num, n)
         num += 1
         
-    for i in range(p - 1, len(convertstr), m):
-        if len(answer) != t:
-            answer += convertstr[i]
-            continue
-        break
-    return answer
+    return convertstr[p-1:t*m:m]
 
 
 def convert(num, base) :
