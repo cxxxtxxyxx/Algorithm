@@ -22,18 +22,14 @@ def solution(files):
     # step 1-1: 처음 숫자 나오기 전까지가 헤드
     # step 1-2: 첫 번째 숫자 ~ 두 번째 숫자가 아닌 문자가 나오기 전까지가 넘버
     # step 1-3: 나머지가 테일
-    # head = []
-    # number = []
-    # tail = []
-    # headRegex = re.compile("\d+")
-    # numberRegex = re.compile("[^\d]+")
+    
     split_file = []
 
     for file in files:
         head = ''
         number = ''
         tail = ''
-        number_check = False
+
         for ch in file:
             if not ch.isdigit() and number == '':
                 head += ch
@@ -44,29 +40,7 @@ def solution(files):
             elif ch.isdigit() and tail != '':
                 tail += ch
         split_file.append([head, number, tail])
-        # print(headRegex.findall(file), numberRegex.findall(file))
-        # number.append(headRegex.findall(file)[0])
-        # head.append(numberRegex.findall(file)[0])
-        # if len(numberRegex.findall(file)) == 1:
-        #     tail.append("")
-        # else:
-        #     tail_start = file.rfind(numberRegex.findall(file)[1])
-        #     tail.append(file[tail_start:])
-        # head_idx = file.find(headRegex.findall(file)[0])
-        # head.append(file[:head_idx])
-        # if len(headRegex.findall(file)[0]) + head_idx == len(file):
-        # # if len(headRegex.findall(file)[0]) + head_idx == len(file):
-        #     tail.append("")
-        #     number.append(file[head_idx:])
-        #     continue
-        # tail_idx = file.find(numberRegex.findall(file[int(file.find(headRegex.findall(file)[0])):])[0])
-        # tail.append(file[tail_idx:])
-        # number.append(file[head_idx:tail_idx])
-
-    # for idx in range(len(head)):
-    #     split_file.append([head[idx], number[idx], tail[idx]])
         
-    print(split_file)
     
     # step 2: 조건에 맞게 안정정렬하기 (sorted 이용)
     return list(map(lambda x: ''.join(x), sorted(split_file, key=lambda x: (x[0].lower(), int(x[1])))))
