@@ -14,50 +14,52 @@
     출력: ["A-10 Thunderbolt II", "B-50 Superfortress", "F-5 Freedom Fighter", "F-14 Tomcat"]
 """
 
-import re
-def solution(files):
-    
-    split_file = []
-    
-    p = re.compile("\d+")
-    for file in files:
-        print(p.findall(file))
-        
-        number_idx = file.find(p.findall(file)[0])
-        tail_idx = len(p.findall(file)[0]) + number_idx
-        if tail_idx == len(file):
-            split_file.append([file[:number_idx], file[number_idx:], ''])
-            continue
-        
-        split_file.append([file[:number_idx], file[number_idx:tail_idx], file[tail_idx:]])
-        
-    return list(map(lambda x: ''.join(x), sorted(split_file, key=lambda x: (x[0].lower(), int(x[1])))))
+# import re
 # def solution(files):
     
-    
-#     # step 1: 파일 명을 Head, Number, Tail로 분리하기
-#     # step 1-1: 처음 숫자 나오기 전까지가 헤드
-#     # step 1-2: 첫 번째 숫자 ~ 두 번째 숫자가 아닌 문자가 나오기 전까지가 넘버
-#     # step 1-3: 나머지가 테일
-    
 #     split_file = []
-
+    
+#     p = re.compile("\d+")
 #     for file in files:
-#         head = ''
-#         number = ''
-#         tail = ''
+#         print(p.findall(file))
+        
+#         number_idx = file.find(p.findall(file)[0])
+#         tail_idx = len(p.findall(file)[0]) + number_idx
+#         if tail_idx == len(file):
+#             split_file.append([file[:number_idx], file[number_idx:], ''])
+#             continue
+        
+#         split_file.append([file[:number_idx], file[number_idx:tail_idx], file[tail_idx:]])
+        
+#     return list(map(lambda x: ''.join(x), sorted(split_file, key=lambda x: (x[0].lower(), int(x[1])))))
 
-#         for ch in file:
-#             if not ch.isdigit() and number == '':
-#                 head += ch
-#             elif not ch.isdigit() and number != '':
-#                 tail += ch
-#             elif ch.isdigit() and tail == '':
-#                 number += ch
-#             elif ch.isdigit() and tail != '':
-#                 tail += ch
-#         split_file.append([head, number, tail])
+
+def solution(files):
+    
+    
+    # step 1: 파일 명을 Head, Number, Tail로 분리하기
+    # step 1-1: 처음 숫자 나오기 전까지가 헤드
+    # step 1-2: 첫 번째 숫자 ~ 두 번째 숫자가 아닌 문자가 나오기 전까지가 넘버
+    # step 1-3: 나머지가 테일
+    
+    split_file = []
+
+    for file in files:
+        head = ''
+        number = ''
+        tail = ''
+
+        for ch in file:
+            if not ch.isdigit() and number == '':
+                head += ch
+            elif not ch.isdigit() and number != '':
+                tail += ch
+            elif ch.isdigit() and tail == '':
+                number += ch
+            elif ch.isdigit() and tail != '':
+                tail += ch
+        split_file.append([head, number, tail])
         
     
-#     # step 2: 조건에 맞게 안정정렬하기 (sorted 이용)
-#     return list(map(lambda x: ''.join(x), sorted(split_file, key=lambda x: (x[0].lower(), int(x[1])))))
+    # step 2: 조건에 맞게 안정정렬하기 (sorted 이용)
+    return list(map(lambda x: ''.join(x), sorted(split_file, key=lambda x: (x[0].lower(), int(x[1])))))
