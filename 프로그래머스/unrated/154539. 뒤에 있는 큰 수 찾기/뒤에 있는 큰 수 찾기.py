@@ -2,17 +2,17 @@ from collections import deque
 def solution(numbers):
     # answer = [-1] * len(numbers)
     
-    answer = deque()
+    answer = []
     stack = []
     numbers.reverse()
     for number in numbers:
         if not answer:
-            answer.appendleft(-1)
+            answer.append(-1)
             stack.append(number)
             continue
             
         if stack[-1] > number:
-            answer.appendleft(stack[-1])
+            answer.append(stack[-1])
             stack.append(number)
             
         else:
@@ -20,15 +20,15 @@ def solution(numbers):
                 stack.pop()
                 
             if stack:
-                answer.appendleft(stack[-1])
+                answer.append(stack[-1])
                 stack.append(number)
                 
             else:
-                answer.appendleft(-1)
+                answer.append(-1)
                 stack.append(number)
                 
             
         
         
-    
-    return list(answer)
+    answer.reverse()
+    return answer
