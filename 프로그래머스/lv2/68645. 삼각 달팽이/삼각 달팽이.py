@@ -1,6 +1,5 @@
 from itertools import chain
 def solution(n):
-    # answer = [0] * (n * (n + 1) // 2 + 1)
     answer = [[0] * i for i in range(n + 1)]
     max_num = (n * (n + 1)) // 2
     
@@ -10,7 +9,6 @@ def solution(n):
     startline = 1
     endline = n - 1
     size = n
-    count = 1
     
     while True:
         if currentNum == max_num + 1:
