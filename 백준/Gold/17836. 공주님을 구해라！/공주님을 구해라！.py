@@ -30,14 +30,6 @@ def bfs():
             if visited[nx][ny][weapon] != 0:
                 continue
 
-            if weapon == 1:
-                visited[nx][ny][weapon] == visited[px][py][weapon] + 1
-                q.append((nx, ny, weapon))
-
-            else:
-                if graph[nx][ny] != 1:
-                    visited[nx][ny][weapon] = visited[px][py][weapon] + 1
-                    q.append((nx, ny, weapon))
 
             if graph[nx][ny] == 0 and weapon == 0:
                 visited[nx][ny][0] = visited[px][py][0] + 1
