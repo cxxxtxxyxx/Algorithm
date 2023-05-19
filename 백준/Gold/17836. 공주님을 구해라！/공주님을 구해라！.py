@@ -17,7 +17,6 @@ def bfs():
     q.append((0, 0, 0))
 
 
-
     while q:
         px, py, weapon = q.popleft()
 
@@ -29,24 +28,20 @@ def bfs():
 
             if visited[nx][ny][weapon] != 0:
                 continue
-
-
-            if graph[nx][ny] == 0 and weapon == 0:
-                visited[nx][ny][0] = visited[px][py][0] + 1
-                q.append((nx, ny, weapon))
-            elif graph[nx][ny] == 0 and weapon == 1:
-                visited[nx][ny][1] = visited[px][py][1] + 1
+            
+            if graph[nx][ny] == 0:
+                visited[nx][ny][weapon] = visited[px][py][weapon] + 1
                 q.append((nx, ny, weapon))
 
-            elif graph[nx][ny] == 2 and weapon == 0 and visited[nx][ny][1] == 0:
+            elif graph[nx][ny] == 1:
+                if weapon == 1:
+                    visited[nx][ny][1] = visited[px][py][1] + 1
+                    q.append((nx, ny, weapon))
+                else:
+                    continue
+            elif graph[nx][ny] == 2:
                 visited[nx][ny][1] = visited[px][py][0] + 1
                 q.append((nx, ny, 1))
-
-            elif graph[nx][ny] == 1 and weapon == 1:
-                visited[nx][ny][1] = visited[px][py][1] + 1
-                q.append((nx, ny, weapon))
-            elif graph[nx][ny] == 1 and weapon == 0:
-                continue
     if visited[N - 1][M - 1][0] == 0 and visited[N - 1][M - 1][1] == 0:
         return "Fail"
     
