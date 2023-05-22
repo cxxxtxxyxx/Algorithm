@@ -1,5 +1,5 @@
 def solution(m, musicinfos):
-    answer = ''
+    answer = "(None)"
     _max = 0
     
     # 실제로 재생된 음에 m이 속해있어야 함
@@ -32,7 +32,4 @@ def solution(m, musicinfos):
                 _max = total_time
                 answer = title
     
-        
-    if len(answer) == 0:
-        return "(None)"
     return answer
