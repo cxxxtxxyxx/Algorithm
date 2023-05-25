@@ -1,17 +1,21 @@
 import sys
 
-input = sys.stdin.readline;
+input = sys.stdin.readline
 
 N, M = map(int, input().split())
 
-arr = list(map(int, input().split()))
-prefix_sum = [0]
-sum_val = 0
+input_list = list(map(int, input().split()))
 
-for i in arr:
-  sum_val += i
-  prefix_sum.append(sum_val)
+S = [0 for __ in range(N)]
 
-for i in range(M):
-  x, y = map(int, input().split()) 
-  print(prefix_sum[y] - prefix_sum[x - 1])
+S[0] = input_list[0]
+
+for i in range(1, N):
+    S[i] = S[i - 1] + input_list[i]
+
+for __ in range(M):
+    i, j = map(int, input().split())
+    if i == 1:
+        print(S[j - 1])
+    else:
+        print(S[j - 1] - S[i - 2])
