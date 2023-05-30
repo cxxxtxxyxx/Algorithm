@@ -8,42 +8,8 @@
 # 모든 광물 캐거나 or 더 이상 곡괭이 없을 때까지 광물캐기
 # 최소한의 피로도를 return
 # """
-# from itertools import product
-# from collections import Counter
-# import sys
 
-# def solution(picks, minerals):
-#     answer = 0
-#     fatigue = {
-#         "diamond": {
-#             "diamond": 1,
-#             "iron": 1,
-#             "stone": 1
-#         },
-#         "iron": {
-#             "diamond": 5,
-#             "iron": 1,
-#             "stone": 1
-#         }, 
-#         "stone": {
-#             "diamond": 25,
-#             "iron": 5,
-#             "stone": 1
-#         }, 
-#     }
-#     pick_name = {"diamond":0, "iron":1, "stone":2}
-#     count = len(minerals) // 5 + 1
-#     print(list(
-#         filter(lambda x: picks[0] >= x[0] and picks[1] >= x[1] and picks[2] >= x[2], list(map(lambda x: [x["diamond"], x["iron"], x["stone"]], list(map(Counter, list(product(pick_name, repeat=count)))))))))
-    
-#     DIAMOND, IRON, STONE = picks[0], picks[1], picks[2]
-#     DIAMOND_t, IRON_t, STONE_t = picks[0], picks[1], picks[2]
-    
-#     _min = sys.maxsize
-    
-    
-    
-#     return answer
+
 from functools import reduce
 from collections import Counter
 def solution(picks, minerals):
@@ -66,10 +32,6 @@ def solution(picks, minerals):
     
     
     for current_minerals in sort_mineral:
-        # current_minerals = []
-        # if i + 5 >= len(minerals):
-        #     current_minerals = minerals[i:]
-        # else: current_minerals = minerals[i:i+5]
         if "diamond" in current_minerals:
             counter = Counter(current_minerals)
             if DIAMOND_t != 0:
