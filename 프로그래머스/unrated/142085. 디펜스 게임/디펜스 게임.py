@@ -1,4 +1,3 @@
-# def solution(n, k, enemy):
 import heapq
 def solution(n, k, enemy):
     answer = 0
