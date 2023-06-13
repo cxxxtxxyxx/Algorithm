@@ -8,5 +8,5 @@ def solution(k, m, score):
     
     score = score[len(score) % m:]
     for i in range(0, len(score), m):
-        answer += min(score[i:i+m]) * m
+        answer += score[i] * m
     return answer
