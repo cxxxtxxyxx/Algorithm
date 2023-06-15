@@ -9,6 +9,7 @@ def solution(X, Y):
     if len(X) > len(Y):
         X, Y = Y, X
         
+        
     while X and Y:
         if X[0] == Y[0]:
             answer += heapq.heappop(X)
