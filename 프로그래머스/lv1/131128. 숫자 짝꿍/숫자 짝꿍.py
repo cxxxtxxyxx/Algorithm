@@ -28,31 +28,3 @@ def solution(X, Y):
         return "0"
     
     return answer
-    
-    return ""
-
-
-
-# def solution(X, Y):
-#     d = dict()
-#     X = list(X)
-#     Y = list(Y)
-#     if len(X) > len(Y):
-#         X, Y = Y, X
-#     for x in X:
-#         if x in Y:
-#             if x not in d:
-#                 d[x] = 1
-#             else:
-#                 d[x] += 1
-#             Y.remove(x)
-#     answer = ""
-#     for key in sorted(d.keys(), reverse=True):
-#         answer += d[key] * key
-    
-#     if answer == "":
-#         return "-1"
-    
-#     if answer[0] == "0":
-#         return "0"
-#     return answer
