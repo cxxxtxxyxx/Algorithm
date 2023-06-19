@@ -6,9 +6,7 @@ def solution(players, callings):
     for calling in callings:
         idx = place[calling]
         players[idx - 1], players[idx] = players[idx], players[idx - 1]
-        tmp = place[players[idx - 1]]
-        place[players[idx - 1]] = place[players[idx]]
-        place[players[idx]] = tmp
+        place[players[idx - 1]], place[players[idx]] = place[players[idx]], place[players[idx - 1]]
         
         
     return players
