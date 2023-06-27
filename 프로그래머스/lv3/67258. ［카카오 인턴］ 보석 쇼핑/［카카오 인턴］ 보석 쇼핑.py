@@ -10,6 +10,7 @@ def solution(gems):
 #     # step 3: 길이가 같은 순간 start, end를 answer에 넣어줌
 #     # step 4: 값 바꿔주고 나서 start를 늘려주며 기존 set에서 하나씩 빼줌 (있을 때)
     
+    
     duplicated_gems = set(gems)
     result = set()
     start = 0
@@ -50,9 +51,6 @@ def solution(gems):
                 result.remove(gems[start])
             start += 1
 
-    if len(result) == len(duplicated_gems) and start != end:
-        if min_len > end - start + 1:
-            answer = [start + 1, end]
-            min_len = end - start + 1
+
     
     return answer
