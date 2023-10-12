@@ -6,12 +6,21 @@ N = int(input())
 M = int(input())
 S = input().strip()
 
-Pn = "I" + "OI" * N
-
 count = 0
+answer = 0
+i = 0
 
-for i in range(len(S)):
-    if S[i : i + (2 * N + 1)] == Pn:
+while i < M - 1:
+    if S[i : i + 3] == "IOI":
+        i += 2
         count += 1
+        if count == N:
+            answer += 1
+            count -= 1
+        
+        continue
 
-print(count)
+    i += 1
+    count = 0
+
+print(answer)
