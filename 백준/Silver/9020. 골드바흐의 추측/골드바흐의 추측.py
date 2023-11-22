@@ -1,56 +1,58 @@
 import sys
-import math
 
 input = sys.stdin.readline
 
-n = int(input().strip())
+T = int(input().strip())
 
-def isPrime(num):
-    if num == 1:
+
+def isPrime(n):
+    if n == 1:
         return False
-
-    for idx in range(2, int(math.sqrt(num)) + 1):
-        if num % idx == 0:
-            return False
     
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+        
     return True
 
-def guess(num):
-    if num // 2 % 2 == 0:
-        a = num // 2 - 1
-        b = num // 2 + 1
-        try:
-            while(not isPrime(a) or not isPrime(b)):
-                a -= 2
-                b += 2
-        except Exception:
-            return
-        
-        
-        print(a, b)
-        return
-    
-    else:
-        a = num // 2
-        b = num // 2
-        if(isPrime(a) and isPrime(b)):
-            print(a, b)
-            return
+def get_prime_nums():
+    MAX_SIZE = 10_001
+    prime_nums = [False] * MAX_SIZE
 
-        try:
-            while(not isPrime(a) or not isPrime(b)):
-                a -= 2
-                b += 2
-        except Exception:
-            return
+    prime_nums[1] = False
+    prime_nums[2] = True
+
+    for i in range(2, MAX_SIZE):
+        if isPrime(i) == True:
+            prime_nums[i] = True
+            for j in range(i * 2, MAX_SIZE, i):
+                prime_nums[j] = False
+
         
-        print(a, b)
-        return
 
+    return prime_nums
 
-for _ in range(n):
-    num = int(input().strip())
-    if(num == 4):
-        print(2, 2)
+result = get_prime_nums()
+
+for __ in range(T):
+    n = int(input().strip())
+
+    half = n // 2
+
+    if result[half]:
+        print(half, half)
         continue
-    guess(num)
+
+    
+    left = half
+    right = half
+
+    if half % 2 == 0:
+        left -= 1
+        right += 1
+
+    while not result[left] or not result[right]:
+        left -= 2
+        right += 2
+
+    print(left, right)
