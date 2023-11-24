@@ -1,33 +1,60 @@
 import sys
 
-def dfsR(i, j):
-  if i < 0 or i > N - 1 or j < 0 or j > N - 1 or graph[i][j] == 0:
-    return 0
-  
-  if visited[i][j] == False and graph[i][j] == 1:
-    visited[i][j] = True
-    total = 1
-    total += dfsR(i - 1, j)
-    total += dfsR(i + 1, j)
-    total += dfsR(i, j - 1)
-    total += dfsR(i, j + 1)
-    return total
-  return 0
+input = sys.stdin.readline
 
-N = int(input())
+
+map_size = int(input())
+
 graph = []
-visited = [[False] * N for _ in range(N)]
-result = []
-for _ in range(N):
-  apart = list(map(int, list(sys.stdin.readline().rstrip())))
-  graph.append(apart)
 
-for i in range(N):
-  for j in range(N):
-    sum_ = dfsR(i, j)
-    if sum_ != 0:
-      result.append(sum_)
+for __ in range(map_size):
+    graph.append(list(map(int, list(input().strip()))))
 
-result.sort()
-print(len(result), *result)
-      
+
+"""
+방문 수 체크 후 리턴
+이중포문으로 모두 돌기
+"""
+
+def dfs(x, y, visited):
+
+    dx = [0, 0, -1, 1]
+    dy = [-1, 1, 0, 0]
+
+    stack = [(x, y)]
+    visited.add((x, y))
+    
+    answer = 1
+
+    while stack:
+        px, py = stack.pop()
+
+        for k in range(4):
+            nx = dx[k] + px
+            ny = dy[k] + py
+
+            if not (0 <= nx < map_size and 0 <= ny < map_size):
+                continue
+
+            if graph[nx][ny] == 0:
+                continue
+
+            if (nx, ny) not in visited:
+                stack.append((nx, ny))
+                visited.add((nx, ny))
+                answer += 1
+
+    return answer
+
+answer = []
+visited = set()
+for i in range(map_size):
+    for j in range(map_size):
+        if graph[i][j] == 1 and (i, j) not in visited:
+            answer.append(dfs(i, j, visited))
+
+answer.sort()
+
+print(len(answer))
+for a in answer:
+    print(a)
