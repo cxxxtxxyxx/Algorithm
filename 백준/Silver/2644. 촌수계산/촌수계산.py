@@ -1,38 +1,41 @@
 import sys
 from collections import deque
+
 input = sys.stdin.readline
 
-n = int(input())
-x, y = map(int, input().strip().split())
+people_size = int(input())
+x, y = map(int, input().split())
 m = int(input())
 
-graph = [[] * (n + 1) for __ in range(n + 1)]
-
+graph = [[] for __ in range(people_size + 1)]
 
 for __ in range(m):
-    i, j = map(int, input().split())
-    graph[i].append(j)
-    graph[j].append(i)
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    graph[b].append(a)
 
-visited = [-1] * (n + 1)
 
-def bfs(start):
-    q = deque([(start, 1)])
+"""
+촌수 계산
+bfs
+x -> y로 가는 최단 거리
+"""
 
-    visited[start] = 1
+def bfs(start, end):
+    visited = [False] * (people_size + 1)
+    q = deque([(start, 0)])
+    visited[start] = True
 
     while q:
-        n, w = q.popleft()
+        next, dist = q.popleft()
+        if next == end:
+            return dist
 
-        for node in graph[n]:
-            if visited[node] == -1:
-                visited[node] = w + 1
-                q.append((node, visited[node]))
+        for node in graph[next]:
+            if not visited[node]:
+                q.append((node, dist + 1))
+                visited[node] = True
 
+    return -1
 
-bfs(x)
-if visited[y] == -1:
-    print(visited[y])
-else:
-    print(visited[y] - 1)
-    
+print(bfs(x, y))
