@@ -1,26 +1,37 @@
 import sys
-import math
 
 input = sys.stdin.readline
 
+T = int(input())
 
-t = int(input())
+"""
+0.5s 512MB
+"""
+
+def get_prime_numbers(size):
+
+    is_prime = [True] * (size + 1)
+    is_prime[0] = False
+    is_prime[1] = False
+
+    for i in range(2, int(size ** 0.5) + 1):
+        if is_prime[i] == True:
+            for j in range(i * 2, size + 1, i):
+                is_prime[j] = False
+
+    return is_prime
 
 
-nums = [int(input()) for _ in range(t)]
-_max = max(nums)
-primes = [False, False] + [True] * (_max - 1)
-for i in range(2, int(_max ** 0.5) + 1):
-    if primes[i]:
-        for j in range(i + i, _max + 1, i):
-            if primes[j]:
-                primes[j] = False
+is_prime = get_prime_numbers(1_000_000)
 
-for num in nums:
-    count = 0
+for __ in range(T):
+    num = int(input())
+
+    _sum = 0
+
     for i in range(2, num // 2 + 1):
-        if primes[i] and primes[num - i]:
-            count += 1
-    print(count)
+        if is_prime[i] and is_prime[num - i]:
+            _sum += 1
 
-
+    
+    print(_sum)
