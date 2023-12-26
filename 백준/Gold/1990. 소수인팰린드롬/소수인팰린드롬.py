@@ -39,7 +39,6 @@ for i in range(a, b + 1):
     if is_palindrome(i):
         for j in range(len(is_prime)):
             if i != is_prime[j] and i % is_prime[j] == 0:
-                # print(f'{i}, {is_prime[j]}')
                 break
         else:
             print(i)
