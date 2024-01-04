@@ -18,7 +18,6 @@ for _ in range(T):
         for __ in range(M // 10 + 1):
             nums.extend(list(map(int, input().strip().split())))
 
-    heap = []
     left_mid = []
     right_mid = []
     result = []
@@ -28,10 +27,12 @@ for _ in range(T):
     tmp = [mid]
 
     for i in range(1, len(nums)):
+
         if nums[i] > mid:
             heapq.heappush(right_mid, nums[i])
         else:
             heapq.heappush(left_mid, -nums[i])
+
 
         if i % 2 == 0:
             if len(left_mid) < len(right_mid):
@@ -40,6 +41,8 @@ for _ in range(T):
             elif len(left_mid) > len(right_mid):
                 heapq.heappush(right_mid, mid)
                 mid = -heapq.heappop(left_mid)
+            else:
+                pass
             
             tmp.append(mid)
             if len(tmp) == 10:
@@ -53,3 +56,5 @@ for _ in range(T):
 
     for r in result:
         print(*r)
+
+
