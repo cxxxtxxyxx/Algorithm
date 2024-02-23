@@ -2,28 +2,31 @@ import sys
 
 input = sys.stdin.readline
 
-n = int(input())
-rows = [0] * n
+N = int(input())
 
-def is_valid(v):
-    for i in range(v):
-        if rows[i] == rows[v] or abs(rows[i] - rows[v]) == abs(v - i):
-            return False
-    return True
+result = 0
 
-count = 0
-def dfs(v):
-    global count
-    if v == n:
-        count += 1
+rows = [0] * N
+
+def backtracking(x):
+
+    global result
+
+    if x == N:
+        result += 1
         return
     
-    for i in range(n):
-        rows[v] = i
-        if is_valid(v):
-            dfs(v + 1)
-            
+    for i in range(N):
+        rows[x] = i
+        if isValid(x):
+            backtracking(x + 1)
 
+def isValid(x):
+    for i in range(x):
+        if rows[x] == rows[i] or (abs(rows[x] - rows[i]) == abs(x - i)):
+            return False
+        
+    return True
 
-dfs(0)
-print(count)
+backtracking(0)
+print(result)
