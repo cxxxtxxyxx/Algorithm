@@ -2,57 +2,54 @@ import sys
 
 input = sys.stdin.readline
 
+sudoku = [list(map(int, input().split())) for __ in range(9)]
 
-graph = [list(map(int, input().split())) for __ in range(9)]
+blank_coords = []
 
-
-blank_list = []
 for i in range(9):
     for j in range(9):
-        if graph[i][j] == 0:
-            blank_list.append((i, j))
-
-def backtracking(count):
-
-    if count == len(blank_list):
-        for row in graph:
-            print(*row)
-        exit()
-    
-    for i in range(1, 10):
-        x = blank_list[count][0]
-        y = blank_list[count][1]
-        if check_3x3(x, y, i) and check_row(x, i) and check_col(y, i):
-            graph[x][y] = i
-            backtracking(count + 1)
-            graph[x][y] = 0
+        if sudoku[i][j] == 0:
+            blank_coords.append((i, j))
 
 
-def check_row(idx, n):
+def backtracking(blank_coords_idx):
+
+    if blank_coords_idx == len(blank_coords):
+        for line in sudoku:
+            print(*line)
+        exit(0)
+
+    x = blank_coords[blank_coords_idx][0]
+    y = blank_coords[blank_coords_idx][1]
+    for i in range(10):
+        if check_row(x, i) and check_col(y, i) and check_3x3(x, y, i):
+            sudoku[x][y] = i
+            backtracking(blank_coords_idx + 1)
+            sudoku[x][y] = 0
+
+
+def check_row(x, value):
     for i in range(9):
-        if n == graph[idx][i]:
+        if sudoku[x][i] == value:
             return False
-        
     return True
 
-def check_col(idx, n):
+def check_col(y, value):
     for i in range(9):
-        if n == graph[i][idx]:
+        if sudoku[i][y] == value:
             return False
-        
     return True
 
-def check_3x3(x, y, n):
-    # x, y가 포함된 정사각형 내부 탐색
+def check_3x3(x, y, value):
+
     nx = x // 3 * 3
     ny = y // 3 * 3
+
     for i in range(3):
         for j in range(3):
-            if n == graph[nx + i][ny + j]:
+            if sudoku[nx + i][ny + j] == value:
                 return False
-        
             
     return True
-
 
 backtracking(0)
