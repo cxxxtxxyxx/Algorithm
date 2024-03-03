@@ -1,66 +1,57 @@
 import sys
-from itertools import chain
 
 input = sys.stdin.readline
 
-confettis = [list(map(int, input().split())) for __ in range(10)]
 
-confetti_count = [0] + [5] * 5
+color_papers = [list(map(int, input().split())) for __ in range(10)]
+
+paper_count = [0] + [5] * 5
 
 result = sys.maxsize
 
-if len(list(filter(lambda x: x == 0, list(chain(*confettis))))) == 100:
-    print(0)
-    exit()
-
-def check_confettis(x, y, size):
-
-    for i in range(x, x + size):
-        if i >= 10:
-            return False
-        for j in range(y, y + size):
-            if j >= 10:
+def check_cover(x, y, k):
+    for i in range(x, x + k):
+        for j in range(y, y + k):
+            if color_papers[i][j] != 1:
                 return False
-            
-            if confettis[i][j] == 0 or confettis[i][j] == -1:
-                return False
+
     return True
 
-def backtracking(i, j):
+def backtracking(x, y):
 
-    global result 
+    global result
 
-    if j == 10:
-        i += 1
-        j = 0
+    if y == 10:
+        x += 1
+        y = 0
 
-    if i == 10 and j == 0:
-        result = min(result, 25 - sum(confetti_count))
+    if x == 10 and y == 0:
+        result = min(result, 25 - sum(paper_count))
         return
+    
 
-    flag = False
-    if confettis[i][j] == 1:
-        for k in range(5, 0, -1):
-            if confetti_count[k] > 0 and check_confettis(i, j, k):
-                confetti_count[k] -= 1
-                for l in range(i, i + k):
-                    for m in range(j, j + k):
-                        confettis[l][m] = -1
-                backtracking(i, j + 1)
-                confetti_count[k] += 1
-                for l in range(i, i + k):
-                    for m in range(j, j + k):
-                        confettis[l][m] = 1
-                flag = True
-        
-        if flag == False:
-            return
+    if color_papers[x][y] == 1:
+        for k in range(1, 6):
+            if x + k - 1 >= 10 or y + k - 1 >= 10:
+                continue
             
+            if paper_count[k] == 0:
+                continue
+
+            if check_cover(x, y, k):
+                paper_count[k] -= 1
+                for i in range(x, x + k):
+                    for j in range(y, y + k):
+                        color_papers[i][j] = -1
+                backtracking(x, y + 1)
+                paper_count[k] += 1
+                for i in range(x, x + k):
+                    for j in range(y, y + k):
+                        color_papers[i][j] = 1
     else:
-        backtracking(i, j + 1)
+        backtracking(x, y + 1)
 
 backtracking(0, 0)
-
 
 if result == sys.maxsize:
     print(-1)
