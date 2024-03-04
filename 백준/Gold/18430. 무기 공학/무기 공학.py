@@ -2,13 +2,13 @@ import sys
 
 input = sys.stdin.readline
 
-N, M = map(int, input().split())
+N, M = map(int, input().strip().split())
 
-
-graph = [list(map(int, input().split())) for __ in range(N)]
-visited = [[False] * M for __ in range(N)]
+wood = [list(map(int, input().strip().split())) for __ in range(N)]
 
 result = 0
+
+visited = [[False] * M for __ in range(N)]
 
 def backtracking(x, y, _sum):
 
@@ -17,74 +17,68 @@ def backtracking(x, y, _sum):
     if y == M:
         x += 1
         y = 0
-
-    if x == N:
+    
+    if x == N and y == 0:
         result = max(result, _sum)
         return
     
-    if not visited[x][y]:
-        """
-        ㅁㅁ
-        ㅁ
-        """
-        if x + 1 < N and y + 1 < M and not visited[x + 1][y] and not visited[x][y + 1]:
-            visited[x][y] = True
-            visited[x + 1][y] = True
-            visited[x][y + 1] = True
-            backtracking(
-                x, y + 1, _sum + 2 * graph[x][y] + graph[x + 1][y] + graph[x][y + 1]
-            )
-            visited[x][y] = False
-            visited[x + 1][y] = False
-            visited[x][y + 1] = False
-
-        """
-        ㅁㅁ
-          ㅁ
-        """
-        if x + 1 < N and y - 1 >= 0 and not visited[x + 1][y] and not visited[x][y - 1]:
+    if visited[x][y] == False:
+        if x + 1 < N and y - 1 >= 0 and visited[x + 1][y] == False and visited[x][y - 1] == False:
             visited[x][y] = True
             visited[x + 1][y] = True
             visited[x][y - 1] = True
             backtracking(
-                x, y + 1, _sum + 2 * graph[x][y] + graph[x + 1][y] + graph[x][y - 1]
+                x, 
+                y + 1, 
+                _sum + wood[x][y] * 2 + wood[x + 1][y] + wood[x][y - 1]
             )
             visited[x][y] = False
             visited[x + 1][y] = False
             visited[x][y - 1] = False
 
-        """
-        ㅁ
-        ㅁㅁ
-        """
-        if x - 1 >= 0 and y + 1 < M and not visited[x - 1][y] and not visited[x][y + 1]:
-            visited[x][y] = True
-            visited[x - 1][y] = True
-            visited[x][y + 1] = True
-            backtracking(
-                x, y + 1, _sum + 2 * graph[x][y] + graph[x - 1][y] + graph[x][y + 1]
-            )
-            visited[x][y] = False
-            visited[x - 1][y] = False
-            visited[x][y + 1] = False
-
-        """
-          ㅁ
-        ㅁㅁ
-        """
-        if x - 1 >= 0 and y - 1 >= 0 and not visited[x - 1][y] and not visited[x][y - 1]:
+        if x - 1 >= 0 and y - 1 >= 0 and visited[x - 1][y] == False and visited[x][y - 1] == False:
             visited[x][y] = True
             visited[x - 1][y] = True
             visited[x][y - 1] = True
             backtracking(
-                x, y + 1, _sum + 2 * graph[x][y] + graph[x - 1][y] + graph[x][y - 1]
+                x, 
+                y + 1, 
+                _sum + wood[x][y] * 2 + wood[x - 1][y] + wood[x][y - 1]
             )
             visited[x][y] = False
             visited[x - 1][y] = False
             visited[x][y - 1] = False
+        
+        if x - 1 >= 0 and y + 1 < M and visited[x - 1][y] == False and visited[x][y + 1] == False:
+            visited[x][y] = True
+            visited[x - 1][y] = True
+            visited[x][y + 1] = True
+            backtracking(
+                x, 
+                y + 1, 
+                _sum + wood[x][y] * 2 + wood[x - 1][y] + wood[x][y + 1]
+            )
+            visited[x][y] = False
+            visited[x - 1][y] = False
+            visited[x][y + 1] = False
+        
+        if x + 1 < N and y + 1 < M and visited[x + 1][y] == False and visited[x][y + 1] == False:
+            visited[x][y] = True
+            visited[x + 1][y] = True
+            visited[x][y + 1] = True
+            backtracking(
+                x, 
+                y + 1, 
+                _sum + wood[x][y] * 2 + wood[x + 1][y] + wood[x][y + 1]
+            )
+            visited[x][y] = False
+            visited[x + 1][y] = False
+            visited[x][y + 1] = False
+        
+        backtracking(x, y + 1, _sum)
+    else:
+        backtracking(x, y + 1, _sum)
 
-    backtracking(x, y + 1, _sum)
-
-
+        
 backtracking(0, 0, 0)
 print(result)
