@@ -1,45 +1,43 @@
 import sys
+from collections import defaultdict
+
 input = sys.stdin.readline
 
-N, K = map(int, input().split())
+N, K = map(int, input().strip().split())
+
+words = [set(list(input().strip())) for __ in range(N)]
+
 if K < 5:
-  print(0)
-  exit()
+    print(0)
+    exit()
 
-elif K == 26:
-  print(N)
-  exit()
+alpha_dict = defaultdict(int)
+for ch in ('a', 'c', 't', 'i', 'n'):
+    alpha_dict[ch] = 1
 
-answer = 0
-words = [set(input().rstrip()) for _ in range(N)]
-learn = [0] * 26
+result = 0
+def backtracking(idx, depth):
 
-for c in ('a', 'c', 'i', 'n', 't'):
-  learn[ord(c) - ord('a')] = 1
+    global result
 
+    if depth == K:
+        _sum = 0
+        alphas = set(list(filter(lambda x: alpha_dict[x] == 1, alpha_dict.keys())))
+        for word in words:
+            if alphas.issuperset(word):
+                _sum += 1
+        
+        result = max(result, _sum)
+        return 
 
-def dfs(idx, cnt):
-  global answer
-
-  if cnt == K - 5:
-    readcnt = 0
-    for word in words:
-      check = True
-      for w in word:
-        if not learn[ord(w) - ord('a')]:
-          check = False
-          break
-      if check:
-        readcnt += 1
     
-    answer = max(answer, readcnt)
-    return
-  
-  for i in range(idx, 26):
-    if not learn[i]:
-      learn[i] = 1
-      dfs(i, cnt + 1)
-      learn[i] = 0
 
-dfs(0, 0)
-print(answer)
+    for i in range(idx, 26):
+        if chr(ord('a') + i) not in alpha_dict or alpha_dict[chr(ord('a') + i)] == 0:
+            alpha_dict[chr(ord('a') + i)] = 1
+            backtracking(i + 1, depth + 1)
+            alpha_dict[chr(ord('a') + i)] = 0
+
+
+backtracking(0, 5)
+print(result)
