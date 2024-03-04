@@ -2,29 +2,29 @@ import sys
 
 input = sys.stdin.readline
 
-"""
-0 ~ 9 10
-10 1
-20 21 2
-30 31 32 3
-40 41 42 43 4
-"""
-
 N = int(input())
 
-arr = []
-result = set()
+result = []
+def backtracking(prev, depth):
 
-def backtracking():
-    if len(arr) > 0:
-        result.add(int("".join(map(str, arr))))
+    if prev:
+        num = int("".join(map(str, prev)))
+        result.append(num)
+
 
     for i in range(10):
-        if len(arr) == 0 or arr[-1] > i:
-            arr.append(i)
-            backtracking()
-            arr.pop()
+        if not prev or prev[-1] > i:
+            prev.append(i)
+            backtracking(prev, depth + 1)
+            prev.pop()
 
-backtracking()
+
+backtracking([], 0)
+
 result = sorted(result)
-print(result[N - 1] if len(result) >= N else -1)
+if len(result) < N:
+    print(-1)
+else:
+    print(result[N - 1])
+
+
