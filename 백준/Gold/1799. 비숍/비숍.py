@@ -4,65 +4,56 @@ input = sys.stdin.readline
 
 N = int(input().strip())
 
-"""
-1은 놓을 수 있는 곳
-0은 놓을 수 없는 곳
-"""
-
-chess_board = [list(map(int, input().strip().split())) for __ in range(N)]
+chess_borad = [list(map(int, input().strip().split())) for __ in range(N)]
 
 white_board = [[0] * N for __ in range(N)]
 black_board = [[0] * N for __ in range(N)]
 
-result = 0
-coords = []
-
 for i in range(N):
     for j in range(N):
-        if chess_board[i][j] == 1:
+        if chess_borad[i][j] == 1:
             if i % 2 == 0 and j % 2 == 0:
-                white_board[i][j] = 1
+                black_board[i][j] = 1
             
             if i % 2 == 1 and j % 2 == 1:
-                white_board[i][j] = 1
+                black_board[i][j] = 1
 
             if i % 2 == 0 and j % 2 == 1:
-                black_board[i][j] = 1
-
+                white_board[i][j] = 1
+            
             if i % 2 == 1 and j % 2 == 0:
-                black_board[i][j] = 1
+                white_board[i][j] = 1
+        
 
-def backtracking(x, y, coords, board):
-    
-    global result
+def backtracking(x, y, result, coords, board):
+
     if y == N:
         x += 1
         y = 0
 
     if x == N and y == 0:
-        result = max(result, len(coords))
-        return
+        return max(result, len(coords))
     
-    if board[x][y] == 0:
-        backtracking(x, y + 1, coords, board)
-        return
-    
-    if (x, y) not in coords:
-        for px, py in coords:
-            if abs(x - px) == abs(y - py):
-                break
+    if board[x][y] == 1:
+        if (x, y) not in coords:
+            if check_coord(x, y, coords):
+                coords.append((x, y))
+                result = max(result, backtracking(x, y + 1, result, coords, board))
+                coords.pop()
 
-        else:
-            coords.append((x, y))
-            backtracking(x, y + 1, coords, board)
-            coords.pop()
+        result = max(result, backtracking(x, y + 1, result, coords, board))
 
-        backtracking(x, y + 1, coords, board)
+    else:
+        result = max(result, backtracking(x, y + 1, result, coords, board))
+    return result
 
-answer = 0
-backtracking(0, 0, [], white_board)
-answer += result
-result = 0
-backtracking(0, 0, [], black_board)
-answer += result
-print(answer)
+def check_coord(x, y, coords):
+
+    for px, py in coords:
+        if abs(px - x) == abs(py - y):
+            return False
+        
+    return True
+
+
+print(backtracking(0, 0, 0, [], black_board) + backtracking(0, 0, 0, [], white_board))
