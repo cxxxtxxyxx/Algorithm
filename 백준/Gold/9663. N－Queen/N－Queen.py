@@ -5,25 +5,28 @@ input = sys.stdin.readline
 N = int(input())
 
 result = 0
-
 rows = [0] * N
-
-def backtracking(x):
+def backtracking(row_idx):
 
     global result
 
-    if x == N:
+    if row_idx == N:
         result += 1
         return
+
+
     
     for i in range(N):
-        rows[x] = i
-        if isValid(x):
-            backtracking(x + 1)
+        
+        rows[row_idx] = i
 
-def isValid(x):
-    for i in range(x):
-        if rows[x] == rows[i] or (abs(rows[x] - rows[i]) == abs(x - i)):
+        if isValid(row_idx):
+            backtracking(row_idx + 1)
+
+def isValid(row_idx):
+
+    for i in range(row_idx):
+        if rows[row_idx] == rows[i] or abs(rows[row_idx] - rows[i]) == abs(row_idx - i):
             return False
         
     return True
